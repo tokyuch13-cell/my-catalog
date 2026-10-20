@@ -1,0 +1,168 @@
+
+---
+const categories = [
+  { name: "Коллекция", description: "Изучите нашу продукцию", image: "https://placehold.co/600x700/e9e1d7/44392f?text=Collection" },
+  { name: "Новинки", description: "Свежие идеи и решения", image: "https://placehold.co/600x700/dedfd5/44392f?text=New+Arrivals" },
+  { name: "Популярное", description: "То, что выбирают чаще", image: "https://placehold.co/600x700/e8d9d1/44392f?text=Popular" }
+];
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Откройте нашу коллекцию продукции." />
+    <title>Каталог — ваш бренд</title>
+    <style>
+      :root {
+        --bg: #f8f6f2;
+        --ink: #292720;
+        --muted: #77736c;
+        --accent: #725b48;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      .header {
+        min-height: 76px;
+        padding: 20px 6%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        border-bottom: 1px solid #e7e2da;
+      }
+      .logo { font-size: 23px; font-weight: 700; letter-spacing: 2px; }
+      nav { display: flex; gap: 26px; font-size: 14px; }
+      .hero {
+        padding: 90px 8%;
+        min-height: 390px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        background: #e9e1d7;
+      }
+      .eyebrow {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+      }
+      h1 {
+        max-width: 650px;
+        margin: 20px 0;
+        font-size: clamp(38px, 6vw, 68px);
+        line-height: 1.05;
+        font-weight: 500;
+      }
+      .hero p { max-width: 480px; color: #61594f; line-height: 1.7; }
+      .button {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 15px 25px;
+        background: var(--ink);
+        color: white;
+        font-size: 13px;
+      }
+      .section { padding: 65px 6%; }
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 28px;
+      }
+      h2 { margin: 0; font-size: clamp(27px, 4vw, 38px); font-weight: 500; }
+      .section-heading p { margin: 0; color: var(--muted); font-size: 14px; }
+      .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+      .category img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        background: #e9e1d7;
+      }
+      .category h3 { margin: 17px 0 8px; font-size: 20px; font-weight: 500; }
+      .category p { margin: 0; color: var(--muted); font-size: 14px; }
+      .about {
+        margin: 0 6% 65px;
+        padding: 48px;
+        background: #eeebe5;
+      }
+      .about p { max-width: 650px; line-height: 1.8; color: #615d56; }
+      footer {
+        padding: 28px 6%;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        border-top: 1px solid #e7e2da;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      @media (max-width: 650px) {
+        .header { align-items: flex-start; flex-direction: column; }
+        nav { flex-wrap: wrap; gap: 16px; }
+        .hero { padding: 65px 7%; min-height: 360px; }
+        .section { padding: 45px 6%; }
+        .grid { grid-template-columns: 1fr; gap: 30px; }
+        .category img { aspect-ratio: 5 / 4; }
+        .section-heading { align-items: flex-start; flex-direction: column; }
+        .about { margin: 0 6% 45px; padding: 28px; }
+        footer { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <a class="logo" href="./">YOUR BRAND</a>
+      <nav aria-label="Главное меню">
+        <a href="./">Главная</a>
+        <a href="catalog/">Каталог</a>
+        <a href="about/">О нас</a>
+        <a href="contacts/">Контакты</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="eyebrow">Наша коллекция</span>
+        <h1>Вещи, в которых есть характер</h1>
+        <p>Откройте для себя нашу продукцию, познакомьтесь с коллекциями и найдите то, что подходит именно вам.</p>
+        <a class="button" href="catalog/">Смотреть каталог ↗</a>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <h2>Исследуйте коллекции</h2>
+          <p>Выберите то, что интересно вам</p>
+        </div>
+        <div class="grid">
+          {categories.map((category) => (
+            <a class="category" href="catalog/">
+              <img src={category.image} alt={category.name} loading="lazy" />
+              <h3>{category.name} ↗</h3>
+              <p>{category.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="about">
+        <span class="eyebrow">О нашем проекте</span>
+        <h2 style="margin-top: 16px;">Больше, чем просто каталог</h2>
+        <p>Здесь можно рассказать о бренде, подходе к созданию продукции и о том, что делает вашу коллекцию особенной. Этот текст позже заменим на информацию о вашем проекте.</p>
+        <a class="button" href="about/">Узнать больше ↗</a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© {new Date().getFullYear()} YOUR BRAND</span>
+      <span>Информация о продукции и компании</span>
+    </footer>
+  </body>
+</html>
