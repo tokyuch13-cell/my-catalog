@@ -1,0 +1,150 @@
+
+---
+const products = [
+  {
+    name: "Товар № 1",
+    category: "Коллекция",
+    description: "Описание первого товара.",
+    price: "1 500 ₽",
+    image: "https://placehold.co/600x700/e9e1d7/44392f?text=Product+01",
+    slug: "product-1"
+  },
+  {
+    name: "Товар № 2",
+    category: "Новинки",
+    description: "Описание второго товара.",
+    price: "2 000 ₽",
+    image: "https://placehold.co/600x700/dedfd5/44392f?text=Product+02",
+    slug: "product-2"
+  },
+  {
+    name: "Товар № 3",
+    category: "Популярное",
+    description: "Описание третьего товара.",
+    price: "1 800 ₽",
+    image: "https://placehold.co/600x700/e8d9d1/44392f?text=Product+03",
+    slug: "product-3"
+  }
+];
+---
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Каталог — YOUR BRAND</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f8f6f2;
+      color: #292720;
+      font-family: Arial, sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    header, footer {
+      padding: 24px 6%;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid #e7e2da;
+    }
+    nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; }
+    .logo { font-size: 21px; font-weight: bold; letter-spacing: 2px; }
+    main { padding: 55px 6%; }
+    h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 500; margin: 0 0 12px; }
+    .intro { color: #77736c; line-height: 1.7; }
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; margin: 30px 0; }
+    .filters button {
+      padding: 11px 17px;
+      border: 1px solid #d7d0c7;
+      background: transparent;
+      cursor: pointer;
+    }
+    .filters button.active { background: #292720; color: white; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .product img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+    }
+    .product h2 { font-size: 19px; font-weight: 500; margin: 14px 0 8px; }
+    .product p { color: #77736c; font-size: 14px; }
+    .price { font-weight: bold; }
+    footer {
+      border-top: 1px solid #e7e2da;
+      border-bottom: 0;
+      color: #77736c;
+      font-size: 13px;
+    }
+    @media(max-width:650px) {
+      header, footer { flex-direction: column; }
+      main { padding: 38px 6%; }
+      .grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+      .product h2 { font-size: 16px; }
+    }
+    @media(max-width:400px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="../../">YOUR BRAND</a>
+    <nav>
+      <a href="../../">Главная</a>
+      <a href="./">Каталог</a>
+      <a href="../../about/">О нас</a>
+      <a href="../../contacts/">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Каталог продукции</h1>
+    <p class="intro">Познакомьтесь с нашей коллекцией и выберите интересующие вас товары.</p>
+
+    <div class="filters" aria-label="Фильтр товаров">
+      <button class="active" data-category="all">Все товары</button>
+      <button data-category="Коллекция">Коллекция</button>
+      <button data-category="Новинки">Новинки</button>
+      <button data-category="Популярное">Популярное</button>
+    </div>
+
+    <div class="grid">
+      {products.map((product) => (
+        <a class="product" data-product-category={product.category} href={`../../products/${product.slug}/`}>
+          <img src={product.image} alt={product.name} loading="lazy" />
+          <h2>{product.name} ↗</h2>
+          <p>{product.description}</p>
+          <span class="price">{product.price}</span>
+        </a>
+      ))}
+    </div>
+  </main>
+
+  <footer>
+    <span>© {new Date().getFullYear()} YOUR BRAND</span>
+    <span>Информационный каталог</span>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll(".filters button");
+    const cards = document.querySelectorAll("[data-product-category]");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        buttons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+
+        const category = button.dataset.category;
+
+        cards.forEach((card) => {
+          card.hidden = category !== "all" && card.dataset.productCategory !== category;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
